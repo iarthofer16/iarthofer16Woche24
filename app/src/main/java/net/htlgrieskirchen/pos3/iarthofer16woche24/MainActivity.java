@@ -1,5 +1,6 @@
 package net.htlgrieskirchen.pos3.iarthofer16woche24;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(this, signUpActivity.class);
+        startActivity(intent);
 
         db = FirebaseFirestore.getInstance();
 
