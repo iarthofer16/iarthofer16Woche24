@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "943905609087",
+    "firebase_url": "https://iarthofer16woche24.firebaseio.com",
+    "project_id": "iarthofer16woche24",
+    "storage_bucket": "iarthofer16woche24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943905609087:android:61775fe9f2a7c993",
+        "android_client_info": {
+          "package_name": "net.htlgrieskirchen.pos3.iarthofer16woche24"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943905609087-4mn8t8id6edbn3ggov6ckta0por1amta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.htlgrieskirchen.pos3.iarthofer16woche24",
+            "certificate_hash": "15ad97e1cbb88574d5712445d30a21478e9a4211"
+          }
+        },
+        {
+          "client_id": "943905609087-p50b6m0fq37cg57dpq4idn4m3hb0gtbl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDddwJCjRE_2p-GDTglOFKhhy4bqPwHYXo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943905609087-p50b6m0fq37cg57dpq4idn4m3hb0gtbl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
