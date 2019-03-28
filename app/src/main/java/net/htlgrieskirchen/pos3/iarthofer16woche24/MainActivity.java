@@ -16,4 +16,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    //TODO firebase authentication
+
+    //TODO save messages in firebase
+
+    //TODO make MESSAGE class
+
+    //TODO load messages from db after login
+
+    //TODO always load new notes from db
+
+    //TODO show messages in LV
+
+    //TODO Logs
 }
