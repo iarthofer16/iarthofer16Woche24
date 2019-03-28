@@ -1,6 +1,7 @@
 package net.htlgrieskirchen.pos3.iarthofer16woche24;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
@@ -54,8 +58,31 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setAdapter(messageAdapter);
 
+        db.collection(collectionName)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            System.err.println("Listen failed: " + e);
+                            return;
+                        }
 
+                        for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Message m = dc.getDocument().toObject(Message.class);
+                                    messages.add(m);
+                                    Collections.sort(messages);
+                                    break;
+                                default:
 
+                                    break;
+                            }
+                        }
+
+                        messageAdapter.notifyDataSetChanged();
+                    }
+                });
 
     }
 
@@ -74,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
             else
             {
                 String message = message_TV.getText().toString();
-                Message m = new Message(username,message);
-                messages.add(m);
+                Message m = new Message(username,message, counter++);
+                //messages.add(m);
                 addMessageToFirebase(m);
-                messageAdapter.notifyDataSetChanged();
+                //messageAdapter.notifyDataSetChanged();
             }
 
 
@@ -107,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        counter++;
     }
 
     private void readMessagesFromFirebase(){
