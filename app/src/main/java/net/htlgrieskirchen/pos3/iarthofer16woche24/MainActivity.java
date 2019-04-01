@@ -42,13 +42,17 @@ public class MainActivity extends AppCompatActivity {
     private boolean login = false;
     private String username = "";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, signUpActivity.class);
-        startActivity(intent);
+        if(!login){
+            login = true;
+            Intent intent = new Intent(this, signUpActivity.class);
+            startActivity(intent);
+        }
 
         db = FirebaseFirestore.getInstance();
 
