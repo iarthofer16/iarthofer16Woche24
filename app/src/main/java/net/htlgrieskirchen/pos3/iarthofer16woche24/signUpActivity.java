@@ -31,7 +31,7 @@ public class signUpActivity extends AppCompatActivity {
         password_TV = findViewById(R.id.passwrd_TV);
     }
 
-    public void onClick(View view) {
+    public void signUp(View view) {
 
         String username = String.valueOf(username_TV.getText());
         String password = String.valueOf(password_TV.getText());
@@ -42,7 +42,7 @@ public class signUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            Log.d("signup", "createUserWithEmail:success");
+                            Log.d("signUp", "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             Intent intent = new Intent(signUpActivity.this, MainActivity.class);
@@ -50,12 +50,34 @@ public class signUpActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
 
-                            Log.w("signup", "createUserWithEmail:failure", task.getException());
+                            Log.d("signUp", "createUserWithEmail:failure", task.getException());
                         }
                     }
                 });
 
 
 
+    }
+
+    public void signIn(View view) {
+        String username = String.valueOf(username_TV.getText());
+        String password = String.valueOf(password_TV.getText());
+
+        mAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("signIn", "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            Intent intent = new Intent(signUpActivity.this, MainActivity.class);
+                            intent.putExtra("user", user);
+                            startActivity(intent);
+                        } else {
+                            Log.d("signIn", "Authentication failed!", task.getException());
+                        }
+                    }
+                });
     }
 }

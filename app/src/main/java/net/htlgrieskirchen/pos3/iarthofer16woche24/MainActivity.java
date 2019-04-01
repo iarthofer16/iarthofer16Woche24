@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     MessageAdapter messageAdapter;
 
     private FirebaseFirestore db;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     private final String collectionName = "Messages";
     private final String TAG = "BRWTalk";
@@ -48,19 +52,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!login){
-            login = true;
-            Intent intent = new Intent(this, signUpActivity.class);
-            startActivity(intent);
-        }
-
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+
 
         listView = findViewById(R.id.listView);
         message_TV = findViewById(R.id.main_message);
         send_button = findViewById(R.id.send_button);
-
-        readMessagesFromFirebase();
 
         messageAdapter = new MessageAdapter(this, messages);
 
@@ -79,11 +79,12 @@ public class MainActivity extends AppCompatActivity {
                             switch (dc.getType()) {
                                 case ADDED:
                                     Message m = dc.getDocument().toObject(Message.class);
+                                    m.setId(counter);
                                     messages.add(m);
                                     Collections.sort(messages);
+                                    counter++;
                                     break;
                                 default:
-
                                     break;
                             }
                         }
@@ -92,28 +93,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        readMessagesFromFirebase();
+
+
+
     }
 
     public void onClick(View view) {
-            if(!login)
-            {
-                username = message_TV.getText().toString();
-//TODO password angemelden
-                login = true;
-                message_TV.setText("");
-                message_TV.setHint("ENTER MESSAGE");
-
-            }
-
-
-            else
-            {
                 String message = message_TV.getText().toString();
                 Message m = new Message(username,message, counter++);
-                //messages.add(m);
                 addMessageToFirebase(m);
-                //messageAdapter.notifyDataSetChanged();
-            }
+                messageAdapter.notifyDataSetChanged();
+                message_TV.setText("");
+
 
 
 
@@ -174,14 +166,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(!messages.isEmpty()){
-            Collections.sort(messages);
-            counter = messages.size()+1;
+            counter = messages.size()+2;
         }
+
+        messageAdapter.notifyDataSetChanged();
     }
-
-
-
-    //TODO firebase authentication
 
     //TODO Logs
 }

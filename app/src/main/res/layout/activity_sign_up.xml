@@ -55,12 +55,28 @@
                 android:inputType="textPassword" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/signIn_button"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Sign in" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/signIn_button2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="signIn"
+                android:text="Sign in" />
+
+            <Button
+                android:id="@+id/signIn_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="signUp"
+                android:text="Sign up" />
+        </LinearLayout>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
