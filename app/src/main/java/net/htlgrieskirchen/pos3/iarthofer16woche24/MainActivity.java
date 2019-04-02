@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
     private final String collectionName = "Messages";
     private final String TAG = "BRWTalk";
     private int counter = 0;
-    private boolean login = false;
     private String username = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -56,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-
+        username = user.getEmail();
 
         listView = findViewById(R.id.listView);
         message_TV = findViewById(R.id.main_message);
         send_button = findViewById(R.id.send_button);
+
+        readMessagesFromFirebase();
 
         messageAdapter = new MessageAdapter(this, messages);
 
@@ -93,22 +95,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        readMessagesFromFirebase();
-
-
 
     }
 
     public void onClick(View view) {
+        Log.d(TAG, "buttonSendClicked");
                 String message = message_TV.getText().toString();
-                Message m = new Message(username,message, counter++);
+                Message m = new Message(message, username, counter++);
                 addMessageToFirebase(m);
                 messageAdapter.notifyDataSetChanged();
                 message_TV.setText("");
-
-
-
-
     }
 
     private void addMessageToFirebase(Message message){
@@ -137,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readMessagesFromFirebase(){
+        Log.d(TAG, "readMEssagesFromFirebase");
         messages = new ArrayList<>();
 
         db.collection(collectionName)
@@ -168,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
         if(!messages.isEmpty()){
             counter = messages.size()+2;
         }
-
-        messageAdapter.notifyDataSetChanged();
     }
 
     //TODO Logs

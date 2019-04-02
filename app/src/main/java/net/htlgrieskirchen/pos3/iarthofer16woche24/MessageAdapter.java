@@ -49,7 +49,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         TextView date_TV = convertView.findViewById(R.id.date_TV);
         TextView message_TV = convertView.findViewById(R.id.message_TV);
 
-        name_TV.setText(m.getUser());
+        name_TV.setText(m.getUser().substring(0, 6));
         date_TV.setText(sdf.format(m.getDateTime()));
         message_TV.setText(m.getMessage());
 

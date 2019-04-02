@@ -56,7 +56,6 @@ public class signUpActivity extends AppCompatActivity {
                 });
 
 
-
     }
 
     public void signIn(View view) {
